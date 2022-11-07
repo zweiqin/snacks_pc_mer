@@ -120,6 +120,7 @@ export default {
 					//
 					// }
 					this.list.push(this.editForm.time)
+					this.list.sort((a, b) => (Number(a.substring(0, 2)) * 60 + Number(a.substring(3, 5))) - (Number(b.substring(0, 2)) * 60 + Number(b.substring(3, 5))))
 					this.handleEdit()
 				} else {
 					return false
