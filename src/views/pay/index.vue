@@ -65,6 +65,7 @@ export default {
 				token: getToken()
 			},
 			uploadForm: {
+				id: 1
 			},
 			fileList: [] // 附件列表
 
