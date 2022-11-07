@@ -14,6 +14,7 @@ import pay from './modules/pay'
 import commodity from './modules/commodity'
 import order from './modules/order'
 import deliverGoods from './modules/deliver-goods'
+import shop from './modules/shop'
 import test from './modules/test'
 
 Vue.use(Router)
@@ -73,6 +74,7 @@ export const constantRoutes = [
 	store,
 	pay,
 	commodity,
+	shop,
 	order,
 	deliverGoods,
 	test, // 测试页面（上线即注释掉）

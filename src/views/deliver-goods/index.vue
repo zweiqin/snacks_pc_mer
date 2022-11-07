@@ -1,40 +1,82 @@
 <template>
 	<div>
 		<el-card class="box-card">
-
-			<div class="flex-center">
-				<el-tree
-					ref="tree"
-					:data="data"
-					show-checkbox
-					node-key="id"
-					:default-expanded-keys="[]"
-					:default-checked-keys="list"
-					@check-change="handleCheckChange"
-				>
-				</el-tree>
+			<div>
+				<el-button type="primary" round size="medium" @click="edit_visible=true">增加配送时间</el-button>
 			</div>
 
-			<div style="margin-top: 20px">
-				<el-button type="primary" round size="medium" @click="handleEdit">确认修改发货时间</el-button>
+			<div class="flex-center">
+				<div v-for="(item,index) in list" style="margin-top: 10px">
+					<el-time-picker
+						v-model="list[index]"
+						:picker-options="{
+							selectableRange: '00:00:00 - 23:59:59'
+						}"
+						placeholder="任意时间点"
+						format="HH:mm"
+						value-format="HH:mm"
+					>
+					</el-time-picker>
+					<el-button type="danger" round size="medium" style="margin-left: 10px" @click="handleDelete(index)">删除</el-button>
+				</div>
+				<el-button v-if="list.length!==0" type="primary" round size="medium" style="margin-top: 10px" @click="handleChange()">确认修改</el-button>
 			</div>
 
 		</el-card>
+
+		<!-- s编辑 -->
+		<el-dialog title="增加配送时间" :close-on-click-modal="false" :visible.sync="edit_visible" class="edit" width="50%">
+			<el-form ref="editForm" :model="editForm" :rules="editRules">
+				<el-form-item label="配送时间" label-width="120px" prop="time">
+					<!--					<el-time-select-->
+					<!--						v-model="editForm.time"-->
+					<!--						:picker-options="{-->
+					<!--							start: '00:00',-->
+					<!--							step: '00:01',-->
+					<!--							end: '23:59'-->
+					<!--						}"-->
+					<!--						placeholder="选择时间"-->
+					<!--					>-->
+					<!--					</el-time-select>-->
+					<el-time-picker
+						v-model="editForm.time"
+						:picker-options="{
+							selectableRange: '00:00:00 - 23:59:59'
+						}"
+						placeholder="任意时间点"
+						format="HH:mm"
+						value-format="HH:mm"
+					>
+					</el-time-picker>
+				</el-form-item>
+			</el-form>
+			<div slot="footer" class="dialog-footer">
+				<el-button type="primary" @click="edit_submit('editForm')">确认添加</el-button>
+			</div>
+		</el-dialog>
+		<!-- e编辑 -->
 
 	</div>
 </template>
 
 <script>
-import { GetDeliveryTime, EditEbSystemDeliveryTimeById } from '@/api/snack'
-import { getToken } from '@/utils/auth'
+import { GetDeliveryTime, EditEbSystemDeliveryTimeById, ChangePayStatus, UpdateDeliveryInfo } from '@/api/snack'
 
 export default {
 	name: 'index',
 	data() {
 		return {
-			data: [],
-			list: []
+			value: '',
+			list: '',
 
+			// 编辑
+			edit_visible: false,
+			editForm: {
+				time: ''
+			},
+			editRules: {
+				time: [ { required: true, message: '请选择要添加的时间', trigger: 'change' } ]
+			}
 		}
 	},
 	computed: {
@@ -42,23 +84,6 @@ export default {
 	created() {
 	},
 	mounted() {
-		// this.getList(1)
-		const temp_arr = []
-		for (let i = 0; i < 24; i++) {
-			temp_arr.push({
-				id: String(i),
-				label: `${i}点`,
-				children: new Array(60).join(',')
-					.split(',')
-					.map((item, index) => (
-						{
-							id: `${i < 10 ? '0' + i : i}:${index < 10 ? '0' + index : index}`,
-							label: `${i < 10 ? '0' + i : i}:${index < 10 ? '0' + index : index}`
-						}
-					))
-			})
-		}
-		this.data = temp_arr
 		this.getList()
 	},
 	methods: {
@@ -75,27 +100,54 @@ export default {
 		handleEdit() {
 			EditEbSystemDeliveryTimeById({ list: this.list })
 				.then((res) => {
-					this.list = res.data.List
-					this.$message.success('修改成功')
+					this.$message.success('增加成功')
+					this.edit_visible = false
+					this.getList()
 				})
 				.catch((err) => {
 					this.$message.error(err.data.data || err.data.msg)
 				})
 		},
-		handleCheckChange(data, checked, indeterminate) {
-			console.log(data, checked, indeterminate)
-			const temp_arr = []
-			this.$refs.tree.getCheckedNodes().forEach((item) => {
-				if (!item.children) {
-					// item.children.forEach((part) => {
-					// 	temp_arr.push(part.id)
-					// })
-					temp_arr.push(item.id)
+		// 编辑--确认
+		edit_submit(formName) {
+			this.$refs[formName].validate((valid) => {
+				if (valid) {
+					// if (this.list.some((item) => item === this.editForm.time)) return this.$message.error('与已有时间重复')
+					// const temp_num = Number(this.editForm.time.substring(0, 2)) * 60 + Number(this.editForm.time.substring(3, 5))
+					// if (this.list.length === 0) {
+					// 	this.list = [ this.editForm.time ]
+					// } else if (this.list.length === 1) {
+					//
+					// }
+					this.list.push(this.editForm.time)
+					this.handleEdit()
+				} else {
+					return false
 				}
 			})
-			this.list = temp_arr
+		},
+		handleDelete(index) {
+			this.list.splice(index, 1)
 			console.log(this.list)
-			console.log(this.$refs.tree.getCheckedNodes())
+			console.log(this.value)
+			EditEbSystemDeliveryTimeById({ list: this.list })
+				.then((res) => {
+					this.getList()
+					this.$message.success('删除成功')
+				})
+				.catch((err) => {
+					this.$message.error(err.data.data || err.data.msg)
+				})
+		},
+		handleChange() {
+			EditEbSystemDeliveryTimeById({ list: this.list })
+				.then((res) => {
+					this.getList()
+					this.$message.success('修改成功')
+				})
+				.catch((err) => {
+					this.$message.error(err.data.data || err.data.msg)
+				})
 		}
 
 	}

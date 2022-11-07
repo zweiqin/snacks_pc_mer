@@ -41,6 +41,21 @@ export function EditEbSystemDeliveryTimeById(data) {
 	return request.put('/v1/EbSystemDeliveryTime/EditEbSystemDeliveryTimeById', data)
 }
 
+// 发货时间
+export function GetEbDeliveryServiceList(data) {
+	return request.get('/v1/EbDeliveryService/GetEbDeliveryServiceList', data)
+}
+
+// 发货时间
+export function ChangePayStatus(data) {
+	return request.put('/v1/EbStoreOrder/ChangePayStatus', data)
+}
+
+// 发货时间
+export function UpdateDeliveryInfo(data) {
+	return request.put('/v1/EbStoreOrder/UpdateDeliveryInfo', data)
+}
+
 // // 新增或修改安装人员
 // export function OperateInstaller(data) {
 // 	return request.post('/v1/installer/OperateInstaller', data)

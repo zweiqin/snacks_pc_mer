@@ -19,18 +19,18 @@
 							</el-select>
 						</el-form-item>
 
-						<el-form-item label="是否删除">
-							<el-select
-								v-model="form.is_del"
-								placeholder="请选择是否删除"
-								@change="getList(1)"
-							>
-								<el-option label="否" value="0" />
-								<el-option label="是" value="1" />
-							</el-select>
-						</el-form-item>
+						<!--						<el-form-item label="是否删除">-->
+						<!--							<el-select-->
+						<!--								v-model="form.is_del"-->
+						<!--								placeholder="请选择是否删除"-->
+						<!--								@change="getList(1)"-->
+						<!--							>-->
+						<!--								<el-option label="否" value="0" />-->
+						<!--								<el-option label="是" value="1" />-->
+						<!--							</el-select>-->
+						<!--						</el-form-item>-->
 
-						<el-button class="ResetSearch mr10" size="small" type="reset" @click="reset">重置</el-button>
+						<!--						<el-button class="ResetSearch mr10" size="small" type="reset" @click="reset">重置</el-button>-->
 						<el-button type="primary" label="default" size="small" @click="getList(1)">查询</el-button>
 					</el-form>
 				</div>
