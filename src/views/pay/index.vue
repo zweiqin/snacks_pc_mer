@@ -113,6 +113,7 @@ export default {
 					message: '上传成功',
 					type: 'success'
 				})
+				this.getPic()
 				// this.getAllFile()
 			} else {
 				this.$message.error(res.msg)
