@@ -81,7 +81,11 @@
 				<!--					</template>-->
 				<!--				</el-table-column>-->
 				<el-table-column prop="stock" label="库存" min-width="100" />
-				<el-table-column prop="expiration_time" label="过期时间" min-width="100" />
+				<el-table-column prop="expiration_time" label="过期时间" min-width="100" :style="{color:'red'}">
+					<template v-slot="scope">
+						<span :style="{color:new Date(scope.row.expiration_time).getTime()>new Date().getTime()?'red':''}">{{ scope.row.expiration_time }}</span>
+					</template>
+				</el-table-column>
 				<el-table-column label="商品状态" min-width="100" prop="is_show">
 					<template v-slot="scope">
 						<el-tag v-if="scope.row.is_show == 1" type="success">上架
