@@ -14,6 +14,7 @@
 								placeholder="请选择配送方式"
 								@change="getList(1)"
 							>
+								<el-option label="全部" value="" />
 								<el-option label="快递" value="1" />
 								<el-option label="自提" value="2" />
 							</el-select>
@@ -68,16 +69,16 @@
 				<!--					</template>-->
 				<!--				</el-table-column>-->
 
-				<!--				<el-table-column prop="status" label="订单状态" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue">-->
-				<!--					<template slot-scope="scope">-->
-				<!--						<el-tag v-if="scope.row.status == -1">申请退款</el-tag>-->
-				<!--						<el-tag v-else-if="scope.row.status == -2">退货成功</el-tag>-->
-				<!--						<el-tag v-else-if="scope.row.status == 0">待发货</el-tag>-->
-				<!--						<el-tag v-else-if="scope.row.status == 1">待收货</el-tag>-->
-				<!--						<el-tag v-else-if="scope.row.status == 2">已收货</el-tag>-->
-				<!--						<el-tag v-else type="success">已退款</el-tag>-->
-				<!--					</template>-->
-				<!--				</el-table-column>-->
+				<el-table-column prop="status" label="订单状态" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue">
+					<template slot-scope="scope">
+						<el-tag v-if="scope.row.status == -1">申请退款</el-tag>
+						<el-tag v-else-if="scope.row.status == -2" type="success">退货成功</el-tag>
+						<el-tag v-else-if="scope.row.status == 0" type="info">待发货</el-tag>
+						<el-tag v-else-if="scope.row.status == 1" type="warning">待收货</el-tag>
+						<el-tag v-else-if="scope.row.status == 2" type="danger">已收货</el-tag>
+						<el-tag v-else type="success">已退款</el-tag>
+					</template>
+				</el-table-column>
 
 				<!--				<el-table-column prop="refund_status" label="是否退款" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue">-->
 				<!--					<template slot-scope="scope">-->
@@ -115,14 +116,14 @@
 				<!--				<el-table-column prop="refund_reason_wap" label="前台退款原因" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
 				<!--				<el-table-column prop="refund_reason" label="不退款的理由" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
 				<!--				<el-table-column prop="refund_price" label="退款金额" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
-				<!--				<el-table-column prop="delivery_name" label="快递名称/送货人姓名" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
+				<el-table-column prop="delivery_name" label="快递名称/送货人姓名" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />
 				<!--				<el-table-column prop="delivery_code" label="快递公司编码" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
 
 				<!--				<el-table-column prop="delivery_type" label="发货类型" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
 
 				<!--				<el-table-column prop="delivery_id" label="快递单号/手机号" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
 				<!--				<el-table-column prop="fictitious_content" label="虚拟发货内容" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
-				<el-table-column prop="delivery_uid" label="配送员id" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />
+				<!--				<el-table-column prop="delivery_uid" label="配送员id" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
 				<!--				<el-table-column prop="gain_integral" label="消费赚取积分" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
 				<!--				<el-table-column prop="use_integral" label="使用积分" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
 				<!--				<el-table-column prop="back_integral" label="给用户退了多少积分" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
@@ -165,12 +166,12 @@
 				<!--				<el-table-column prop="verify_code" label="核销码" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
 				<!--				<el-table-column prop="store_id" label="门店id" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
 
-				<!--				<el-table-column prop="shipping_type" label="配送方式" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue">-->
-				<!--					<template slot-scope="scope">-->
-				<!--						<el-tag v-if="scope.row.shipping_type == 1">快递</el-tag>-->
-				<!--						<el-tag v-else type="success">门店自提</el-tag>-->
-				<!--					</template>-->
-				<!--				</el-table-column>-->
+				<el-table-column prop="shipping_type" label="配送方式" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue">
+					<template slot-scope="scope">
+						<el-tag v-if="scope.row.shipping_type == 1">快递</el-tag>
+						<el-tag v-else type="success">门店自提</el-tag>
+					</template>
+				</el-table-column>
 
 				<!--				<el-table-column prop="clerk_id" label="店员id" min-width="100" :formatter="(row, column, cellValue, index)=>cellValue===''?'无':cellValue" />-->
 
@@ -217,8 +218,10 @@
 
 				<el-table-column label="操作" min-width="120" fixed="right" align="center">
 					<template slot-scope="scope">
-						<el-button v-if="(scope.row.paid==0&&scope.row.delivery_uid==0)" type="text" size="small" class="mr10" @click="editPay(scope.row)">修改支付状态</el-button>
-						<el-button v-if="scope.row.paid==1&&scope.row.delivery_uid==0" type="text" size="small" class="mr10" @click="editDeliver(scope.row)">分配配送人员</el-button>
+						<!--            <el-button v-if="(scope.row.paid==0&&scope.row.delivery_uid==0)" type="text" size="small" class="mr10" @click="editPay(scope.row)">修改支付状态</el-button>-->
+						<!--            <el-button v-if="scope.row.paid==1&&scope.row.delivery_uid==0" type="text" size="small" class="mr10" @click="editDeliver(scope.row)">分配配送人员</el-button>-->
+						<el-button v-if="scope.row.paid!=1" type="text" size="small" class="mr10" @click="editPay(scope.row)">修改支付状态</el-button>
+						<el-button v-if="scope.row.status==0" type="text" size="small" class="mr10" @click="editDeliver(scope.row)">分配配送人员</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -257,12 +260,12 @@
 		<!-- e编辑 -->
 
 		<!-- s编辑 -->
-		<el-dialog title="分配安装人员" :close-on-click-modal="false" :visible.sync="edit_visible" class="edit" width="50%">
+		<el-dialog title="分配配送人员" :close-on-click-modal="false" :visible.sync="edit_visible" class="edit" width="50%">
 			<el-form ref="editForm" :model="editForm" :rules="editRules">
-				<el-form-item label="安装人员" label-width="120px" prop="installer_id">
+				<el-form-item label="配送人员" label-width="120px" prop="installer_id">
 					<el-select
 						v-model="editForm.service_id"
-						placeholder="请选择安装人员"
+						placeholder="请选择配送人员"
 					>
 						<el-option
 							v-for="item in installer_list"
@@ -295,7 +298,7 @@ export default {
 			form: {
 				page: 1,
 				limit: 10,
-				shipping_type: '1',
+				shipping_type: '',
 				installer_id: ''
 			},
 			installer_list: [],
@@ -333,7 +336,7 @@ export default {
 		this.getList(1)
 	},
 	methods: {
-		// 获取安装人员信息
+		// 获取配送人员信息
 		async getServiceList() {
 			await GetEbDeliveryServiceList({})
 				.then((res) => {
@@ -405,7 +408,7 @@ export default {
 					} else {
 						UpdateDeliveryInfo(this.editForm)
 							.then((res) => {
-								this.$message.success('成功分配安装人员！')
+								this.$message.success('成功分配配送人员！')
 								this.getList('')
 								this.edit_visible = false
 							})
