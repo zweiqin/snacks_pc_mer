@@ -246,7 +246,7 @@
 				<!--				<el-table-column prop="supplier_id" label="供应商关联ID" min-width="100" />-->
 				<el-table-column prop="expiration_time" label="过期时间" min-width="100" :style="{color:'red'}">
 					<template v-slot="scope">
-						<span :style="{color:new Date(scope.row.expiration_time).getTime()>new Date().getTime()?'red':''}">{{ scope.row.expiration_time }}</span>
+						<span :style="{color:new Date(scope.row.expiration_time).getTime()<new Date().getTime()?'red':''}">{{ scope.row.expiration_time }}</span>
 					</template>
 				</el-table-column>
 			</el-table>

@@ -15,6 +15,8 @@
 						<!--						<el-button size="small" type="primary" @click="search">查询</el-button>-->
 					</el-form-item>
 				</el-form>
+				<el-button size="small" style="margin-left: 20px" type="success" @click="downloadAddShopList">下载增加商品列表
+				</el-button>
 				<el-upload
 					style="display: inline;margin-left: 20px"
 					class="upload-demo"
@@ -30,7 +32,7 @@
 				>
 					<el-button size="small" type="primary">批量增加商品</el-button>
 				</el-upload>
-				<el-button size="small" style="margin-left: 20px" type="success" @click="downloadShopList">下载商品列表
+				<el-button size="small" style="margin-left: 20px" type="success" @click="downloadShopList">下载修改商品列表
 				</el-button>
 				<el-upload
 					:action="modify_upload_url"
@@ -83,7 +85,7 @@
 				<el-table-column prop="stock" label="库存" min-width="100" />
 				<el-table-column prop="expiration_time" label="过期时间" min-width="100" :style="{color:'red'}">
 					<template v-slot="scope">
-						<span :style="{color:new Date(scope.row.expiration_time).getTime()>new Date().getTime()?'red':''}">{{ scope.row.expiration_time }}</span>
+						<span :style="{color:new Date(scope.row.expiration_time).getTime()<new Date().getTime()?'red':''}">{{ scope.row.expiration_time }}</span>
 					</template>
 				</el-table-column>
 				<el-table-column label="商品状态" min-width="100" prop="is_show">
@@ -156,7 +158,7 @@ export default {
 				label: '商品分类ID',
 				isShow: true
 			}, {
-				value: 'supplier_id',
+				value: 'expiration_time',
 				label: '过期日期',
 				isShow: true
 			}, {
@@ -174,6 +176,35 @@ export default {
 			}, {
 				value: 'is_modified',
 				label: '是否更改',
+				isShow: true
+			}],
+			shop_arr_add: [{
+				value: 'store_name',
+				label: '商品名称',
+				isShow: true
+			}, {
+				value: 'price',
+				label: '售价',
+				isShow: true
+			}, {
+				value: 'cost',
+				label: '成本价',
+				isShow: true
+			}, {
+				value: 'cate_id',
+				label: '商品分类ID',
+				isShow: true
+			}, {
+				value: 'expiration_time',
+				label: '过期日期',
+				isShow: true
+			}, {
+				value: 'is_show',
+				label: '商品状态',
+				isShow: true
+			}, {
+				value: 'unit_name',
+				label: '单位',
 				isShow: true
 			}]
 		}
@@ -195,6 +226,10 @@ export default {
 				.catch((err) => {
 					this.$message.error(err.data.msg)
 				})
+		},
+		// 下载商品列表
+		downloadAddShopList() {
+			exportXlsxPopulate({ data: [ { store_name: '示例名称', price: '99999999', cost: '88888888', cate_id: '66666666', expiration_time: '2099-09-09', is_show: '1', unit_name: '吨' } ] }, '商品列表', this.shop_arr_add)
 		},
 		// 下载商品列表
 		downloadShopList() {
