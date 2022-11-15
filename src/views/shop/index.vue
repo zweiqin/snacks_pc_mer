@@ -57,7 +57,7 @@
 					<template slot-scope="scope">
 						<div v-if="!scope.row.image">无</div>
 						<div v-else>
-							<el-image ref="lazyImg" class="vx-lazyLoad" :src="scope.row.image" fit="fit" :preview-src-list="[scope.row.image]" style="width: 150px; height: 100px">
+							<el-image ref="lazyImg" class="vx-lazyLoad" lazy :src="scope.row.image" fit="fit" :preview-src-list="[scope.row.image]" style="width: 150px; height: 100px">
 								<div slot="placeholder" class="image-slot">
 									<i class="el-icon-loading"></i>加载中
 								</div>
