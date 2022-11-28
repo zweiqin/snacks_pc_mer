@@ -56,6 +56,16 @@ export function UpdateDeliveryInfo(data) {
 	return request.put('/v1/EbStoreOrder/UpdateDeliveryInfo', data)
 }
 
+// 配送金额
+export function GetMinPrice(data) {
+	return request.get('/v1/SystemDeliveryMin/GetMinPrice', data)
+}
+
+// 配送金额
+export function ChangeMinPrice(data) {
+	return request.put('/v1/SystemDeliveryMin/ChangeMinPrice', data)
+}
+
 // // 新增或修改安装人员
 // export function OperateInstaller(data) {
 // 	return request.post('/v1/installer/OperateInstaller', data)

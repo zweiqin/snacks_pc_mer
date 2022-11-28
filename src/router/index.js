@@ -14,6 +14,7 @@ import pay from './modules/pay'
 import commodity from './modules/commodity'
 import order from './modules/order'
 import deliverGoods from './modules/deliver-goods'
+import settlement from './modules/settlement'
 import shop from './modules/shop'
 import test from './modules/test'
 
@@ -77,6 +78,7 @@ export const constantRoutes = [
 	shop,
 	order,
 	deliverGoods,
+	settlement,
 	test, // 测试页面（上线即注释掉）
 	{
 		path: '/404',
